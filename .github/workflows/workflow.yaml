@@ -6,14 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      mongodb:
-        image: mongo:latest
-        env:
-          MONGO_INITDB_ROOT_USERNAME: admin
-          MONGO_INITDB_ROOT_PASSWORD: 123
-        ports:
-          - 27018:27017
+
 
     steps:
       - uses: actions/checkout@v4
@@ -25,12 +18,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Debug MongoDB Connection
-        run: |
-          echo "MongoDB Connection String: mongodb://admin:123@localhost:27018/test?authSource=admin"
-          nc -zv localhost 27018
-
       - name: Install dependencies and run tests
         run: mvn --batch-mode package
         env:
-          SPRING_DATA_MONGODB_URI: mongodb://admin:123@localhost:27018/test?authSource=admin
+          SPRING_DATA_MONGODB_URI: mongodb://admin:123@localhost:27017/test?authSource=admin
