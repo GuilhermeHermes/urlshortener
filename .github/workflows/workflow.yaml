@@ -1,0 +1,21 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: setup jdk
+      uses: actions/setup-java@v3
+      with:
+            java-version: 21
+            distribution: 'openjdk'
+            cache: maven
+
+
+    - name: Install  and test with maven
+      run: mvn --batch-mode package
+
