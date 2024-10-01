@@ -35,7 +35,7 @@ class UrlRepositoryTest{
         registry.add("spring.data.mongodb.uri", () ->
                 String.format("mongodb://admin:123@%s:%d/test?authSource=admin",
                         mongoDBContainer.getHost(),
-                        mongoDBContainer.getMappedPort(27017))
+                        mongoDBContainer.getFirstMappedPort())
         );
     }
 
@@ -43,6 +43,7 @@ class UrlRepositoryTest{
     void setUp() {
         urlRepository.deleteAll();
     }
+
 
 
     @Test
