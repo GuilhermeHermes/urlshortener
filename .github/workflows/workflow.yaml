@@ -18,13 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-#      - name: start docker
-#        run: docker-compose -f docker/docker-compose.yml up -d
-#        working-directory: .
-#        env:
-#          MONGO_INITDB_ROOT_USERNAME: admin
-#          MONGO_INITDB_ROOT_PASSWORD: 123
-#
+      - name: Set up Docker
+        run: sudo service docker start
+        
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
