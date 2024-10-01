@@ -13,7 +13,7 @@ jobs:
           MONGO_INITDB_ROOT_USERNAME: admin
           MONGO_INITDB_ROOT_PASSWORD: 123
         ports:
-          - 27017:27017
+          - 27018:27017
 
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +24,11 @@ jobs:
           java-version: 21
           distribution: 'temurin'
           cache: maven
+
+      - name: Debug MongoDB Connection
+        run: |
+          echo "MongoDB Connection String: mongodb://admin:123@localhost:27018/test?authSource=admin"
+          nc -zv localhost 27018
 
       - name: Install dependencies and run tests
         run: mvn --batch-mode package
