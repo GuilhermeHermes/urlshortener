@@ -25,7 +25,8 @@ class UrlRepositoryTest{
     public static GenericContainer mongoDBContainer = new GenericContainer("mongo:latest")
             .withExposedPorts(27017)
             .withEnv("MONGO_INITDB_ROOT_USERNAME", "admin")
-            .withEnv("MONGO_INITDB_ROOT_PASSWORD", "123");
+            .withEnv("MONGO_INITDB_ROOT_PASSWORD", "123")
+            .withNetworkAliases("mongo");;
 
     @Autowired
     private UrlRepository urlRepository;
