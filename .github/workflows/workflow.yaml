@@ -6,16 +6,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:latest
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: 123
+        ports:
+          - 27017:27017
+
     steps:
-    - uses: actions/checkout@v4
-    - name: setup jdk
-      uses: actions/setup-java@v3
-      with:
-            java-version: 21
-            distribution: 'temurin'
-            cache: maven
+      - uses: actions/checkout@v4
 
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: 'temurin'
+          cache: maven
 
-    - name: Install  and test with maven
-      run: mvn --batch-mode package
-
+      - name: Install dependencies and run tests
+        run: mvn --batch-mode package
+        env:
+          SPRING_DATA_MONGODB_URI: mongodb://admin:123@localhost:27017/test?authSource=admin
